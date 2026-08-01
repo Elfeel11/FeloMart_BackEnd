@@ -5,9 +5,10 @@ import { AuthModule } from "../auth/auth.module";
 import userModel from "src/models/User.model";
 import { UserController } from "./user.controller";
 import { SharedModule } from "./../../common/module/shared.Module";
+import { categoryModel } from "src/models/Category.model";
 
 @Module({
-  imports: [userModel],
+  imports: [userModel, categoryModel],
   controllers: [UserController],
   providers: [UserService, UserRepo],
   exports: [UserService],

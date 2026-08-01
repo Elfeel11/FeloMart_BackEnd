@@ -5,8 +5,10 @@ import {
   Req,
   SetMetadata,
   UploadedFile,
+  UploadedFiles,
   UseGuards,
   UseInterceptors,
+  UsePipes,
 } from "@nestjs/common";
 import type { Express } from "express";
 import type { IRequestAuth } from "src/common/interface/request.interface.js";
@@ -17,8 +19,13 @@ import { Authoriaztionuard } from "./../../common/guard/authorization.guard";
 import { Auth } from "./../../common/decorator/aurh.decorator";
 import { User } from "./../../common/decorator/user.decorator";
 import type { IHUser } from "src/models/User.model";
-import { FileInterceptor } from "@nestjs/platform-express";
+import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import multer from "multer";
+import { FileValidationPipe } from "./../../common/pipe/fileValidation.pipe";
+import { allowedfileDormats } from "./../../common/pipe/fileValidation.pipe";
+import { StorageApproachEnum } from "src/common/enums/multer.enum.js";
+import { tmpdir } from "node:os";
+import { multerOptions } from "./../../common/utils/multer.confing";
 
 @Controller("user")
 export class UserController {
@@ -30,14 +37,19 @@ export class UserController {
     return { message: "Done", user: user };
   }
 
-  @UseInterceptors(
-    FileInterceptor("ProfilePic", {
-      storage: multer.memoryStorage(),
-      limits: { fileSize: 5 * 1024 * 1024 },
-    }),
-  )
+  @Auth({})
+  @UsePipes(new FileValidationPipe(allowedfileDormats.img))
+  @UseInterceptors(FileInterceptor("ProfilePic", multerOptions()))
   @Post("upload-profile-pic")
-  getProfilePic(@UploadedFile() file: any) {
-    return { message: "Done", user: file };
+  uploadProfilePic(@UploadedFile() file: any) {
+    return { message: "Done", file };
+  }
+
+  @Auth({})
+  @UsePipes(new FileValidationPipe(allowedfileDormats.img))
+  @UseInterceptors(FilesInterceptor("coverPic", 4, multerOptions()))
+  @Post("upload-cover-pic")
+  uploadCoverPic(@UploadedFiles() file: any) {
+    return { message: "Done", file };
   }
 }
