@@ -4,7 +4,7 @@ import slugify from "slugify";
 export interface ICategory {
   name: string;
   slug: string;
-  image: string;
+  image?: string;
   isActive: boolean;
 }
 
@@ -30,10 +30,10 @@ export class Category implements ICategory {
     type: String,
     required: true,
     unique: true,
-    set: function (this: Category) {
-      const slug = slugify(this.name);
-      return slug;
-    },
+    // set: function (this: Category) {
+    //   const slug = slugify(this.name);
+    //   return slug;
+    // },
   })
   slug!: string;
 

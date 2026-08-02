@@ -8,6 +8,9 @@ import { Connection } from "mongoose";
 import { JwtModule } from "@nestjs/jwt";
 import { UserModule } from "./module/user/user.module";
 import { SharedModule } from "./common/module/shared.Module";
+import { CategoryModule } from "./module/category/category.Module";
+import { SubCategoryModule } from "./module/subCategory/subCategory.module";
+import { BrandModule } from "./module/brand/brand.module";
 
 @Module({
   imports: [
@@ -35,6 +38,9 @@ import { SharedModule } from "./common/module/shared.Module";
       }),
     }),
     UserModule,
+    CategoryModule,
+    SubCategoryModule,
+    BrandModule,
   ],
   controllers: [AppController],
   providers: [AppService],
