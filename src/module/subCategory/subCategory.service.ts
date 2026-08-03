@@ -68,4 +68,34 @@ export class SubCategoryService {
     await subCategory.save();
     return subCategory;
   }
+
+  async getAllSubCategories(query?: { category?: string }) {
+    const filter: Record<string, any> = {};
+    if (query?.category) {
+      filter.category = query.category;
+    }
+    return await this.subCategoryModel.find(filter).populate("category");
+  }
+
+  async getSubCategoryById(id: string) {
+    const subCategory = await this.subCategoryModel
+      .findById(id)
+      .populate("category");
+
+    if (!subCategory) {
+      throw new NotFoundException("SubCategory not found");
+    }
+
+    return subCategory;
+  }
+
+  async deleteSubCategory(id: string) {
+    const subCategory = await this.subCategoryModel.findByIdAndDelete(id);
+
+    if (!subCategory) {
+      throw new NotFoundException("SubCategory not found");
+    }
+
+    return subCategory;
+  }
 }

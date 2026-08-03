@@ -11,6 +11,7 @@ import { SharedModule } from "./common/module/shared.Module";
 import { CategoryModule } from "./module/category/category.Module";
 import { SubCategoryModule } from "./module/subCategory/subCategory.module";
 import { BrandModule } from "./module/brand/brand.module";
+import { ProductModule } from './module/product/product.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { BrandModule } from "./module/brand/brand.module";
     CategoryModule,
     SubCategoryModule,
     BrandModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],

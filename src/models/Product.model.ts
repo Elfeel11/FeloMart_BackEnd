@@ -13,7 +13,7 @@ export interface IProduct {
   price: number;
   priceAfterDiscount: number;
   discount: {
-    discount: number;
+    amount: number;
     type: DiscountEnum;
   };
   stock: number;
@@ -98,7 +98,7 @@ export class Product implements IProduct {
       },
     },
   })
-  discount!: { discount: number; type: DiscountEnum };
+  discount!: { amount: number; type: DiscountEnum };
 
   @Prop({
     type: [String],

@@ -47,4 +47,28 @@ export class BrandService {
     await brand.save();
     return brand;
   }
+
+  async getAllBrands() {
+    return await this.brandModel.find();
+  }
+
+  async getBrandById(id: string) {
+    const brand = await this.brandModel.findById(id);
+
+    if (!brand) {
+      throw new NotFoundException("Brand not found");
+    }
+
+    return brand;
+  }
+
+  async deleteBrand(id: string) {
+    const brand = await this.brandModel.findByIdAndDelete(id);
+
+    if (!brand) {
+      throw new NotFoundException("Brand not found");
+    }
+
+    return brand;
+  }
 }

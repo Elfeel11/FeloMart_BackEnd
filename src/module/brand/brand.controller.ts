@@ -1,6 +1,8 @@
 import {
   Body,
   Controller,
+  Delete,
+  Get,
   Param,
   Patch,
   Post,
@@ -32,5 +34,19 @@ export class BrandController {
     @Body() body: Partial<IBrand>,
   ) {
     return this.brandService.updateBrand(id, body);
+  }
+
+  @Get()
+  getAllBrands() {
+    return this.brandService.getAllBrands();
+  }
+
+  @Get("/:id")
+  getBrandById(@Param("id") id: string) {
+    return this.brandService.getBrandById(id);
+  }
+  @Delete("/:id")
+  deleteBrand(@Param("id") id: string) {
+    return this.brandService.deleteBrand(id);
   }
 }

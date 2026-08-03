@@ -1,6 +1,8 @@
 import {
   Body,
   Controller,
+  Delete,
+  Get,
   Param,
   Patch,
   Post,
@@ -10,6 +12,7 @@ import {
 import { CategoryService } from "./category.service";
 import { ICategory } from "src/models/Category.model.js";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { Types } from "mongoose";
 
 @Controller("category")
 export class CategoryController {
@@ -24,6 +27,11 @@ export class CategoryController {
     return this.categoryService.creatCategory(body);
   }
 
+  @Get()
+  async getAllCategory() {
+    return await this.categoryService.getAllCategory();
+  }
+
   @Patch("/:id")
   @UseInterceptors(FileInterceptor("image"))
   async updateCategory(
@@ -32,5 +40,10 @@ export class CategoryController {
     @Body() body: Partial<ICategory>,
   ) {
     return this.categoryService.updateCategory(id, body);
+  }
+
+  @Delete("/:id")
+  async deleteCategory(@Param("id") id: Types.ObjectId) {
+    return await this.categoryService.deleteCategory(id);
   }
 }

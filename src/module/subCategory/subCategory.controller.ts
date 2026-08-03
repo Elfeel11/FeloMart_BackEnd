@@ -1,9 +1,12 @@
 import {
   Body,
   Controller,
+  Delete,
+  Get,
   Param,
   Patch,
   Post,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from "@nestjs/common";
@@ -32,5 +35,19 @@ export class SubCategoryController {
     @Body() body: Partial<ISubCategory>,
   ) {
     return this.subCategoryService.updateSubCategory(id, body);
+  }
+
+  @Get()
+  getAllSubCategories(@Query("category") category?: string) {
+    return this.subCategoryService.getAllSubCategories({ category });
+  }
+
+  @Get("/:id")
+  getSubCategoryById(@Param("id") id: string) {
+    return this.subCategoryService.getSubCategoryById(id);
+  }
+  @Delete("/:id")
+  deleteSubCategory(@Param("id") id: string) {
+    return this.subCategoryService.deleteSubCategory(id);
   }
 }
